@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    environment {
+        tag = sh(returnStdout: true, script: "git rev-parse --short=10 HEAD").trim()
+    }
+
     stages {
         stage('compile') {
             steps {
@@ -18,11 +22,9 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                // Retrieve the short commit hash
-                sh "COMMIT_HASH=\$(git rev-parse --short HEAD)"
-                sh '/usr/local/bin/docker build -t mohammedaddoumi/all-review:develop-${COMMIT_HASH} .'
+                sh '/usr/local/bin/docker build -t mohammedaddoumi/all-review:develop-${tag} .'
                 sh '/usr/local/bin/docker login -u mohammedaddoumi -p simoQB24188'
-                sh '/usr/local/bin/docker push mohammedaddoumi/all-review:develop-${COMMIT_HASH}'
+                sh '/usr/local/bin/docker push mohammedaddoumi/all-review:develop-${tag}'
             }
         }
         stage('Kubernetes Deployment') {
