@@ -1,10 +1,12 @@
 package org.allreview.controllers;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.allreview.domain.User;
 import org.allreview.services.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/users")
@@ -19,7 +21,9 @@ public class UserController {
   }
 
   @PostMapping
-  public User addUser(@RequestBody User user) {
-    return userService.addUser(user);
+  public ResponseEntity<User> addUser(@RequestBody User user) {
+    if("fake".equalsIgnoreCase(user.getName())) return ResponseEntity.badRequest().build();
+    User createdUser = userService.addUser(user);
+    return ResponseEntity.ok(createdUser);
   }
 }
