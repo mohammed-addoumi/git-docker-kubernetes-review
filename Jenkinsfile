@@ -29,7 +29,7 @@ pipeline {
         }
         stage('Kubernetes Deployment') {
             steps {
-                sh "sed -i 's|image: mohammedaddoumi/all-review:.*$|image: mohammedaddoumi/all-review:develop-${tag}|' kubernetes/deployment.yml"
+                sh "sed -i 's|image: mohammedaddoumi/all-review:.*$$|image: mohammedaddoumi/all-review:develop-${tag}|' kubernetes/deployment.yml"
                 sh '/usr/local/bin/kubectl apply -f kubernetes/deployment.yml'
             }
         }
