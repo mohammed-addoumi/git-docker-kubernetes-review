@@ -1,0 +1,21 @@
+version: "3.0"
+services:
+  postgres:
+    container_name: postgres
+    image: postgres
+    ports:
+      - "5430:5432"
+    environment:
+      POSTGRES_PASSWORD: password
+    volumes:
+      - /Users/simoaddoumi/Documents/docker-review-app/git-docker-kubernetes-review/data:/var/lib/postgresql/data
+
+  all-review:
+    container_name: all-review
+    image: mohammedaddoumi/all-review
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres

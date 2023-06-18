@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: all-review-dep
+  labels:
+    app: all-review-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: all-review-app
+  template:
+    metadata:
+      labels:
+        app: all-review-app
+    spec:
+      containers:
+        - name: all-review
+          image: mohammedaddoumi/all-review
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://postgres-service:5432/postgres

@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: all-review-application
+  jpa:
+    show-sql: true
+  datasource:
+    url: jdbc:postgresql://localhost:5430/postgres
+    username: postgres
+    password: password
