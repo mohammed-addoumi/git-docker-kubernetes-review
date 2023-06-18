@@ -27,9 +27,22 @@ pipeline {
                 sh '/usr/local/bin/docker push mohammedaddoumi/all-review:develop-${tag}'
             }
         }
+        stage('Modify File') {
+            steps {
+                script {
+                    // Read the file content
+                    def fileContent = readFile('kubernetes/deployment.yml')
+
+                    // Replace the desired pattern in the content
+                    def modifiedContent = fileContent.replaceAll('image: mohammedaddoumi/all-review:.*$', "image: mohammedaddoumi/all-review:develop-${tag}")
+
+                    // Write the modified content back to the file
+                    writeFile(file: 'kubernetes/deployment.yml', text: modifiedContent)
+                }
+            }
+        }
         stage('Kubernetes Deployment') {
             steps {
-                sh "sed -i 's|image: mohammedaddoumi/all-review:.*$$|image: mohammedaddoumi/all-review:develop-${tag}|' kubernetes/deployment.yml"
                 sh '/usr/local/bin/kubectl apply -f kubernetes/deployment.yml'
             }
         }
