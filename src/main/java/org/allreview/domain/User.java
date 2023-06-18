@@ -1,10 +1,9 @@
 package org.allreview.domain;
 
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
@@ -13,9 +12,10 @@ import javax.persistence.*;
 @Table(name = "users_table")
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "users_seq_generator")
-    @SequenceGenerator(name = "users_seq_generator",sequenceName = "users_seq",allocationSize = 1)
-    private Long id;
-    private String name;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_seq_generator")
+  @SequenceGenerator(name = "users_seq_generator", sequenceName = "users_seq", allocationSize = 1)
+  private Long id;
+
+  private String name;
 }
