@@ -18,9 +18,11 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                sh '/usr/local/bin/docker build -t mohammedaddoumi/all-review  .'
+                // Retrieve the short commit hash
+                sh "COMMIT_HASH=\$(git rev-parse --short HEAD)"
+                sh '/usr/local/bin/docker build -t mohammedaddoumi/all-review:develop-${COMMIT_HASH} .'
                 sh '/usr/local/bin/docker login -u mohammedaddoumi -p simoQB24188'
-                sh '/usr/local/bin/docker push mohammedaddoumi/all-review '
+                sh '/usr/local/bin/docker push mohammedaddoumi/all-review:develop-${COMMIT_HASH}'
             }
         }
         stage('Kubernetes Deployment') {
