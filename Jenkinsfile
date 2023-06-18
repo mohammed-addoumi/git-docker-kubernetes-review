@@ -25,13 +25,13 @@ pipeline {
         }
         stage('Kubernetes Deployment') {
             steps {
-                sh '/usr/local/bin/kubectl apply -f kubernetes/deployment.yaml'
+                sh '/usr/local/bin/kubectl apply -f kubernetes/deployment.yml'
             }
         }
 
         stage('Kubernetes Service') {
             steps {
-                sh '/usr/local/bin/kubectl apply -f kubernetes/service.yaml'
+                sh '/usr/local/bin/kubectl apply -f kubernetes/service.yml'
             }
         }
     }
